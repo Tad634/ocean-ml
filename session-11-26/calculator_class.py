@@ -21,4 +21,4 @@ my_calculator = calculator()
 x = 3
 y = 4
 
-my_calculator.addition(3,4)
+my_calculator.addition(x,y)
