@@ -30,7 +30,7 @@ C
 	REAL C1(0:100),C2(0:100),wf(0:100,0:100,0:100)
 	INTEGER NL,NF,NC
         CHARACTER*3,NAME
-	CHARACTER*75 filedat,fileqdi,fileww,filestm,filepa
+	CHARACTER*75 filedat,fileqdi,w,filestm,filepa
 	CHARACTER*1 ans
 
 	OMEGA=7.29E-5
