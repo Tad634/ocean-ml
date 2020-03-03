@@ -24,15 +24,10 @@ pressure3D = np.zeros((31,80,27))
 firtst_layer=np.repeat(10,80*27).reshape(80,27)
 second_layer=np.repeat(20,80*27).reshape(80,27)
 
-for i in pressure[:]:
-	values = (np.repeat(i,80*27).reshape((80,27)))
-
 for i in range(0,31):
 	pressure3D[i,:,:] = (np.repeat(pressure[i],80*27).reshape(80,27))
 
 print(pressure3D)
-
-
 
 density = (sw.dens(salinity[:], temp[:], pressure3D[:]))
 
