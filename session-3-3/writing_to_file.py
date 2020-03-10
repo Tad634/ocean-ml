@@ -26,19 +26,20 @@ longitude = dataset['longitude']
 pressure3D = np.zeros((31,80,27))
 
 
-firtst_layer=np.repeat(10,80*27).reshape(80,27)
-second_layer=np.repeat(20,80*27).reshape(80,27)
+# firtst_layer=np.repeat(10,80*27).reshape(80,27)
+# second_layer=np.repeat(20,80*27).reshape(80,27)
 
 for i in range(0,31):
 	pressure3D[i,:,:] = (np.repeat(pressure[i],80*27).reshape(80,27))
 
-#print(pressure3D)
+print(pressure3D)
 
 density = (sw.dens(salinity[:], temp[:], pressure3D[:]))
 density = density-1000
 print(density.shape)
 
 time_1 = density[10,:,:,:]
+print(time_1)
 
 # for i in range(0,31):
 # 	for j in range(0,80):
@@ -49,6 +50,10 @@ density_file = open('density_file.txt', "w")
 for i in range(0,31):
 	for j in range(0,80):
 		for k in range(0,27):
-			density_file.write(str(time_1[i,j,k]))
+			density_file.write(str(time_1[i,j,k] ) + "\n") 
 density_file.close()
+
+
+
+
 
