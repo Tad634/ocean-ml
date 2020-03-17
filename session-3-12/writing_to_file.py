@@ -7,7 +7,9 @@
 from netCDF4 import Dataset
 import numpy as np
 import seawater as sw
-
+import datetime as td
+import tricubic
+import interpolate
 #input: salinity, temperature, and pressure in form of netcdf file 
 #1st: import data and get all 
 dataset = Dataset(r'/Users/brownscholar/Desktop/dataset-armor-3d-rep-weekly_1574699840388.nc')
@@ -53,12 +55,17 @@ time_1 = density[:,:,:,:]
 # 			density_file.write(str(time_1[i,j,k] ) + "\n") 
 # density_file.close()
 #80 is lat, 27 is lon
+start = td.date(1950,1,1)
+
 
 for i in range(0,1356):
-	density_times = open("den_times_" + str(i) + ".txt", "w")
-	for j in range(0,31):
+	density_at_time = interp(density[i,:,:,:])
+	hours = td.timedelta(hours = int(time[i]))
+	after = start + hours
+	date = after.strftime("%y") + after.strftime("%m") + after.strftime("%d")
+	density_times = open("density_" + str(date) + ".txt", "w")
+	for j in range(0,30):
 		for k in range(0,80):
 			for r in range(0,27):
-				density_times.write(str(density[i,j,k,r]) + "\n")
+				density_times.write(str(density_at_time[j,k,r]) + "\n")
 	density_times.close()
-				 
