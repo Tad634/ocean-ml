@@ -1,9 +1,3 @@
-# to do 
-# for i in range(0,10):
-# 	for j in range(0,10):
-# 		for k in range(0,10):
-# 			print(i,j,k)
-
 from netCDF4 import Dataset
 import numpy as np
 import seawater as sw
@@ -21,7 +15,7 @@ time = dataset['time']
 dynamic_h = dataset["zo"]
 dynamic_h = dynamic_h[:] * 100
 
-
+#interp function
 def interp(startgrid):
 	num_depths = 30 # to avoid problems with seafloor depth
 	z_step = 10 
@@ -58,47 +52,21 @@ def interp(startgrid):
 
 	return interp_grid
 
-
-#print(salinity.shape)
-#print(temp.shape)
-#print(pressure.shape)
-#print(latitude.shape)
-#print(longitude.shape)
-
-
+#filling in values to make depth array 3D so that it works in the density file
 pressure3D = np.zeros((31,80,27))
-
-
-# firtst_layer=np.repeat(10,80*27).reshape(80,27)
-# second_layer=np.repeat(20,80*27).reshape(80,27)
-
 for i in range(0,31):
 	pressure3D[i,:,:] = (np.repeat(pressure[i],80*27).reshape(80,27))
-
-print(pressure3D)
-
+#making densityvales
 density = (sw.dens(salinity[:], temp[:], pressure3D[:]))
 density = density-1000
 print(density.shape)
 
 time_1 = density[:,:,:,:]
-
-# for i in range(0,31):
-# 	for j in range(0,80):
-# 		for k in range(0,27):
-# 			print(time_1[i,j,k])
-
-# density_file = open('density_file.txt', "w")
-# for i in range(0,31):
-# 	for j in range(0,80):
-# 		for k in range(0,27):
-# 			density_file.write(str(time_1[i,j,k] ) + "\n") 
-# density_file.close()
-#80 is lat, 27 is lon
-
 start = td.date(1950,1,1)
 
 #loops through 0-1356 and sets hours to i and all other values.
+#opens files for each date and adds that information to each file
+#Directory for file
 for i in range(0,1356):
 	dynamic_at_time = interp(dynamic_h[i,:12,:,:])
 	density_at_time = interp(density[i,:12,:,:])
