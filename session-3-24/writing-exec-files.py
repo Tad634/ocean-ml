@@ -1,15 +1,14 @@
 # to do
 import sys
-import numpy
-import datetime as td
 example_date = sys.argv[1]
 # vectorq.exec:
 vectorq = open("vectorq.exec",'w')
-("#!/bin/csh\n\n")
+vectorq.write("#!/bin/csh\n\n")
+vectorq,write("set indir = /Users/brownscholar/Desktop")
 vectorq.write("set dir = ./test/\n")
 vectorq.write("set fileinfo = {$dir}info_pr.dat\n")
-vectorq.write("set filedh =  {$dir}dh_"+example_date+".gr\n")
-vectorq.write("set filest =  {$dir}density_"+example_date+".gr\n")
+vectorq.write("set filedh =  {$indir}/file_dynamic_height/dh_"+example_date+".gr\n")
+vectorq.write("set filest =  {$indir}/file_density/density_"+example_date+".gr\n")
 vectorq.write("set filestm = {$dir}ss1_st0.dat\n")
 vectorq.write("set filequ =  {$dir}ss1a2qu.gr\n")
 vectorq.write("set fileqv =  {$dir}ss1a2qv.gr\n")

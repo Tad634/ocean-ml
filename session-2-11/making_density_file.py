@@ -69,7 +69,3 @@ print(pressure3D)
 density = (sw.dens(salinity[:], temp[:], pressure3D[:]))
 
 print(density)
-=======
-# inputs: salinity, temperature, pressure in form of netcdf file
-
->>>>>>> ae2a66d07524f15dcce27fbe52b54d85ec246ec5
