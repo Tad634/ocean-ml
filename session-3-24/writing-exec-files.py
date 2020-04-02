@@ -1,6 +1,11 @@
 # to do
 import sys
+
+base = "/Users/brownscholar/Desktop/Internship/ocean-ml/session-3-24/writing_to_file.py"
 example_date = sys.argv[1]
+vectorq = base+'vectorq.exec'
+omegainv = base+'omegainv.exec'
+
 # vectorq.exec:
 vectorq = open("vectorq.exec",'w')
 vectorq.write("#!/bin/csh\n\n")
