@@ -9,51 +9,58 @@ num_lon = 27
 levels = 30
 dates = 1356
 z_step = 10 
-
+#path to w files (created by fortran code)
 w_path = '/Users/brownscholar/Desktop/fortran_files/omega/w/'
-
+#creates file name from date_list
 date_list = open('date_list.txt','r')
-
+#creates blank array to fill
 w_array = np.zeros((dates,num_lat,num_lon,levels))
-
+#loops through number of dates
 for d in range(0,dates):
 	date = date_list.readline()
 	filename = date[:-1]+"_ww.gr"  
 	print(filename)
-	w_file = open(w_path+filename,"r") 
+	#opens w_file
+	w_file = open(w_path+filename,"r")
+	#skips the header in w file 
 	w_file.readline() 
 	w_file.readline()
+	#loops through depth
 	for i in range(0,levels): 
+		#loops through latitude
 		for j in range(0,num_lat): 
+			#loops through longitude
 			for k in range(0,num_lon): 
 				w = w_file.readline() 
 				w_array[d,j,k,i] = float(w)
 	
+#creates numpy array with all of the latitude values
 latitude_val = np.arange(19.625+.5,39.375-.25,0.25)
 longitude_val = np.arange(293.875+.5,300.375-.25,0.25)
 time_val = np.arange(377064,604704+168,168)
 
-
+# opens netcdf file
 grp = Dataset('/Users/brownscholar/Desktop/fortran_files/omega.nc','w', format='NETCDF4')
-
+#creates dimensions in netcdf file
 grp.createDimension('lon', num_lon-4)
 grp.createDimension('lat', num_lat-4)
 grp.createDimension('depth', levels)
 grp.createDimension('time', dates)
-
+#creates variables in numpy array 
+#f4 means that the values will be floats
 longitude = grp.createVariable('longitude', 'f4', 'lon') 
 latitude = grp.createVariable('latitude', 'f4', 'lat')  
 depth = grp.createVariable('depth', 'f4', 'depth')
 time = grp.createVariable('time','f4', 'time')
 w = grp.createVariable('w', 'f4', ('time', 'lat', 'lon', 'depth'))
 
- 
+#fills the variables in the netcdf file with the values from the numpy arrays
 longitude[:] = longitude_val
 latitude[:] = latitude_val
 time[:] = time_val
 depth_arr = (-1)*np.arange(z_step,(levels+1)*z_step,z_step)
 depth[:]= depth_arr
-
+# takes value from w file and puts it into numpy array
 w[:] = w_array[:,2:78,2:25,:]
 
 #adds units to netcdf variables
@@ -65,7 +72,7 @@ depth.axis = 'Z'
 
 w.units = 'm/day'
 
-
+#closes netcdf file
 grp.close()
 
 
