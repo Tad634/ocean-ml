@@ -9,8 +9,14 @@ w_values = dataset["w"]
 print(w_values.shape)
 
 lat = dataset["latitude"]
-first_plot = w_values[:,0,:,0]
+depth = dataset["depth"]
+
+first_plot = w_values[:,60,:,0]
+second_plot = w_values[:,60,:,14]
+third_plot = w_values[:,60,:,29]
 first_plot = np.swapaxes(first_plot,0,1)
+second_plot = np.swapaxes(second_plot,0,1)
+third_plot = np.swapaxes(third_plot,0,1)
 print(first_plot.shape)
 
 top = cm.get_cmap('Blues_r')
@@ -23,7 +29,16 @@ plt.xlabel('years')
 plt.ylabel('longitude')
 plt.pcolormesh(first_plot,cmap=newcmp)
 plt.colorbar()
-plt.show()
+#plt.show()
+_min = -10
+_max = 10
 
 fig, ax = plt.subplots(3,1)
-ax[0,0].pcolormesh(first_plot,cmap=newcmp)
+ax[0].pcolormesh(first_plot,cmap=newcmp,vmin = _min, vmax = _max)
+ax[1].pcolormesh(second_plot,cmap=newcmp,vmin = _min, vmax = _max)
+ax[2].pcolormesh(third_plot,cmap=newcmp,vmin = _min, vmax = _max)
+fig.suptitle("Hovmoller diagram at different depths, at latitude " + str(lat[60]))
+ax[0].set_title("depth = " + str(depth[0]))
+ax[1].set_title("depth = " + str(depth[14]))
+ax[2].set_title("depth =" + str(depth[29]))
+plt.show()
